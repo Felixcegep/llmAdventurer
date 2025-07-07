@@ -23,9 +23,28 @@ func Combat(p *llm.Player, b *llm.Boss, dialogue string) {
 				b.Health -= 50
 
 			case 2:
-				fmt.Println("heal")
-			case 3:
-				fmt.Println("defense")
+				fmt.Println("use items")
+				for i, items := range p.Inventory {
+					fmt.Println(i, items)
+				}
+				var choiceItem int
+				fmt.Print("enter you choice :")
+				fmt.Scan(&choiceItem)
+				if 0 <= choiceItem && choiceItem <= len(p.Inventory)-1 {
+					fmt.Println("items used", p.Inventory[choiceItem])
+					switch p.Inventory[choiceItem].ItemType {
+					case 0:
+						fmt.Println("heal")
+					case 1:
+						fmt.Println("attack")
+					case 2:
+						fmt.Println("defense")
+
+					}
+				} else {
+					fmt.Println("choice dont exist")
+				}
+
 			default:
 				fmt.Println("invalid choice")
 			}
