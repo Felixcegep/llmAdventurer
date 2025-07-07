@@ -13,8 +13,22 @@ func Combat(p *llm.Player, b *llm.Boss, dialogue string) {
 		if b.Health <= 0 {
 			break
 		} else {
-			b.Health -= 50
-			fmt.Println("enemis ", b.Health)
+			var choice int
+			fmt.Println(b.Health)
+			fmt.Println("enter your choices 1. attack 2. use items")
+			fmt.Scan(&choice)
+			switch choice {
+			case 1:
+				fmt.Println("attack")
+				b.Health -= 50
+
+			case 2:
+				fmt.Println("heal")
+			case 3:
+				fmt.Println("defense")
+			default:
+				fmt.Println("invalid choice")
+			}
 		}
 	}
 }
