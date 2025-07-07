@@ -8,6 +8,7 @@ import (
 
 func main() {
 	gameData, err := llm.Llm_choices()
+	gameData.Players.HealingPotion = 5
 	if err != nil {
 		fmt.Println(err)
 		return

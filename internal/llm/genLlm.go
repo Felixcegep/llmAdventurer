@@ -31,12 +31,14 @@ type Object struct {
 	Defense  int      `json:"Defense"`
 }
 type Player struct {
-	HeroName  string   `json:"HeroName"`
-	Health    int      `json:"Health"`
-	Attack    int      `json:"Attack"`
-	Defense   int      `json:"Defense"`
-	Inventory []Object `json:"Inventory"`
+	HeroName      string   `json:"HeroName"`
+	Health        int      `json:"Health"`
+	Attack        int      `json:"Attack"`
+	Defense       int      `json:"Defense"`
+	Inventory     []Object `json:"Inventory"`
+	HealingPotion int
 }
+
 type Boss struct {
 	Name    string `json:"Name"`
 	Health  int    `json:"Health"`
