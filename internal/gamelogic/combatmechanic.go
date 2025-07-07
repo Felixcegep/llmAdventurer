@@ -9,7 +9,7 @@ func calculateDamage(attack, defense int) int {
 	return damage
 }
 func Combat(p *Player, b *Boss, dialogue string) {
-
+	fmt.Println("attack", b.Attack)
 	fmt.Printf("combat %v vs %v \n", p.HeroName, b.Name)
 	fmt.Println("Dialogue : ", dialogue)
 	for {
@@ -30,7 +30,8 @@ func Combat(p *Player, b *Boss, dialogue string) {
 				fmt.Println("choice dont exist")
 			}
 		}
-		// boss combat here
+		bossTurn(p, b)
+
 	}
 }
 func playerTurn(p *Player, b *Boss, choices int) {
@@ -49,7 +50,7 @@ func playerTurn(p *Player, b *Boss, choices int) {
 
 func bossTurn(p *Player, b *Boss) {
 	fmt.Printf("%s attacks you!\n", b.Name)
-	damage := calculateDamage(b.Health, p.Defense)
+	damage := calculateDamage(b.Attack, p.Defense)
 	p.Health -= damage
 	fmt.Printf("You took %d damage! Your health is now %d\n", damage, p.Health)
 }
