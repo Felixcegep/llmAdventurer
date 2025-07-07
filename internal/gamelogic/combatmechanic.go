@@ -20,7 +20,7 @@ func Combat(p *llm.Player, b *llm.Boss, dialogue string) {
 			switch choice {
 			case 1:
 				fmt.Println("attack")
-				b.Health -= 50
+				b.Health -= p.Attack
 
 			case 2:
 				fmt.Println("use items")
@@ -35,8 +35,18 @@ func Combat(p *llm.Player, b *llm.Boss, dialogue string) {
 					switch p.Inventory[choiceItem].ItemType {
 					case 0:
 						fmt.Println("heal")
+						p.Health += p.Inventory[choiceItem].Health
+						indexToRemove := choiceItem
+						p.Inventory = append(p.Inventory[:indexToRemove], p.Inventory[indexToRemove+1:]...)
+						fmt.Println(p.Inventory)
 					case 1:
 						fmt.Println("attack")
+						fmt.Println("attack before", b.Health)
+						b.Health -= p.Inventory[choiceItem].Attack
+						fmt.Println("attack after", b.Health)
+						indexToRemove := choiceItem
+						p.Inventory = append(p.Inventory[:indexToRemove], p.Inventory[indexToRemove+1:]...)
+						fmt.Println(p.Inventory)
 					case 2:
 						fmt.Println("defense")
 
