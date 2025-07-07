@@ -13,64 +13,71 @@ func Combat(p *Player, b *Boss, dialogue string) {
 	fmt.Printf("combat %v vs %v \n", p.HeroName, b.Name)
 	fmt.Println("Dialogue : ", dialogue)
 	for {
-		if b.Health <= 0 {
+		fmt.Printf("%s %d  vs  %s %d \n", p.HeroName, p.Health, b.Name, b.Health)
+
+		if b.Health <= 0 || p.Health <= 0 {
+
 			break
 		} else {
 			var choice int
-			fmt.Println(b.Health)
-			fmt.Println("enter your choices 1. attack 2. healing 3. use items")
+			fmt.Println("1. default attack\n 2. healing\n 3. select item")
+			fmt.Print("Enter choice: ")
 			fmt.Scan(&choice)
-			switch choice {
-			case 1:
-				fmt.Println("attack")
-				b.Health -= calculateDamage(p.Attack, b.Defense)
-			case 2:
-				fmt.Println("healing")
-				if p.HealingPotion > 0 {
-					p.Health += 50
-					p.HealingPotion--
-				} else {
-					fmt.Println("no healing potion left you pass the tour ")
-				}
-			case 3:
-				fmt.Println("use items")
-				for i, items := range p.Inventory {
-					fmt.Println(i, items)
-				}
-				var choiceItem int
-				fmt.Print("enter you choice :")
-				fmt.Scan(&choiceItem)
-				if 0 <= choiceItem && choiceItem <= len(p.Inventory)-1 {
-					fmt.Println("items used", p.Inventory[choiceItem])
-					switch p.Inventory[choiceItem].ItemType {
-					case 0:
-						fmt.Println("heal")
-						p.Health += p.Inventory[choiceItem].Health
-						indexToRemove := choiceItem
-						p.Inventory = append(p.Inventory[:indexToRemove], p.Inventory[indexToRemove+1:]...)
-						fmt.Println(p.Inventory)
-					case 1:
-						fmt.Println("attack")
-						fmt.Println("attack before", b.Health)
-						b.Health -= calculateDamage(p.Inventory[choiceItem].Attack, b.Defense)
-						fmt.Println("attack after", b.Health)
-						indexToRemove := choiceItem
-						p.Inventory = append(p.Inventory[:indexToRemove], p.Inventory[indexToRemove+1:]...)
-						fmt.Println(p.Inventory)
-					case 2:
-						fmt.Println("defense")
-						p.Defense += p.Inventory[choiceItem].Defense
-						indexToRemove := choiceItem
-						p.Inventory = append(p.Inventory[:indexToRemove], p.Inventory[indexToRemove+1:]...)
-					}
-				} else {
-					fmt.Println("choice dont exist")
-				}
+			if 0 <= choice && choice <= 3 {
 
-			default:
-				fmt.Println("invalid choice")
-
+				playerTurn(p, b, choice)
+			} else {
+				fmt.Println("choice dont exist")
 			}
 		}
+		// boss combat here
+	}
+}
+func playerTurn(p *Player, b *Boss, choices int) {
+	switch choices {
+	case 1:
+		fmt.Println("attack")
+		b.Health -= calculateDamage(p.Attack, b.Defense)
+
+	case 2:
+		p.healingpotion()
+	case 3:
+		PlayerUseItem(p, b)
+	}
+
+}
+
+func bossTurn(p *Player, b *Boss) {
+	fmt.Printf("%s attacks you!\n", b.Name)
+	damage := calculateDamage(b.Health, p.Defense)
+	p.Health -= damage
+	fmt.Printf("You took %d damage! Your health is now %d\n", damage, p.Health)
+}
+func PlayerUseItem(p *Player, b *Boss) {
+	for i, item := range p.Inventory {
+		fmt.Println(i, item)
+	}
+
+	var choiceItem int
+	fmt.Print("Choose item: ")
+	fmt.Scan(&choiceItem)
+
+	if choiceItem >= 0 && choiceItem < len(p.Inventory) {
+		item := p.Inventory[choiceItem]
+		switch item.ItemType {
+		case 0: // Heal
+			p.Health += item.Health
+			fmt.Println("You used a healing item.")
+		case 1: // Attack
+			b.Health -= calculateDamage(item.Attack, b.Defense)
+			fmt.Println("You used an attack item.")
+		case 2: // Defense
+			p.Defense += item.Defense
+			fmt.Println("You used a defense item.")
+		}
+		// Remove item
+		p.Inventory = append(p.Inventory[:choiceItem], p.Inventory[choiceItem+1:]...)
+	} else {
+		fmt.Println("Invalid item choice.")
 	}
 }

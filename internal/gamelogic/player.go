@@ -2,6 +2,7 @@ package gamelogic
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 type Game struct {
@@ -35,15 +36,15 @@ type Player struct {
 	HealingPotion int
 }
 
-func (p *Player) attack(attack, defense int) {
-
-}
-func (p *Player) itemdefense(defenseadd int) {
-	p.Defense += defenseadd
-}
-func (p *Player) healingpotion(healingpotion int) {
+func (p *Player) healingpotion() {
 	const PV = 50
-	p.Health += PV
+	fmt.Println("healing")
+	if p.HealingPotion > 0 {
+		p.Health += PV
+		p.HealingPotion--
+	} else {
+		fmt.Println("no healing potion left you pass the tour ")
+	}
 }
 
 type Boss struct {
