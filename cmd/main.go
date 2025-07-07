@@ -7,7 +7,17 @@ import (
 )
 
 func main() {
-	gameData, err := llm.Llm_choices()
+	gameDataUnformated, err := llm.Llm_choices()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	gameData, err := gamelogic.GameInitialization(gameDataUnformated)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(gameData)
+
 	gameData.Players.HealingPotion = 5
 	if err != nil {
 		fmt.Println(err)
@@ -21,4 +31,5 @@ func main() {
 	}
 	fmt.Println("end", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
 	fmt.Println("player", gameData.Players.Inventory)
+
 }

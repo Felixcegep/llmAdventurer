@@ -1,7 +1,6 @@
 package gamelogic
 
 import (
-	"awesomeProject1/internal/llm"
 	"fmt"
 )
 
@@ -9,7 +8,7 @@ func calculateDamage(attack, defense int) int {
 	damage := attack - (defense / 2)
 	return damage
 }
-func Combat(p *llm.Player, b *llm.Boss, dialogue string) {
+func Combat(p *Player, b *Boss, dialogue string) {
 
 	fmt.Printf("combat %v vs %v \n", p.HeroName, b.Name)
 	fmt.Println("Dialogue : ", dialogue)
@@ -70,6 +69,7 @@ func Combat(p *llm.Player, b *llm.Boss, dialogue string) {
 
 			default:
 				fmt.Println("invalid choice")
+
 			}
 		}
 	}
