@@ -19,5 +19,5 @@ func main() {
 		gamelogic.Combat(&gameData.Players, &boss, gameData.Dialogues[i+1].Content)
 	}
 	fmt.Println("end", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
-
+	fmt.Println("player", gameData.Players.Inventory)
 }

@@ -24,17 +24,18 @@ const (
 )
 
 type Object struct {
-	itemType itemType
-	healt    int
-	attack   int
-	defense  int
+	ItemType itemType `json:"ItemType"`
+	NameItem string   `json:"NameItem"`
+	Health   int      `json:"Health"`
+	Attack   int      `json:"Attack"`
+	Defense  int      `json:"Defense"`
 }
 type Player struct {
-	HeroName  string `json:"HeroName"`
-	Health    int    `json:"Health"`
-	Attack    int    `json:"Attack"`
-	Defense   int    `json:"Defense"`
-	inventory []Object
+	HeroName  string   `json:"HeroName"`
+	Health    int      `json:"Health"`
+	Attack    int      `json:"Attack"`
+	Defense   int      `json:"Defense"`
+	Inventory []Object `json:"Inventory"`
 }
 type Boss struct {
 	Name    string `json:"Name"`
@@ -61,7 +62,8 @@ You are a JSON Game Story Generator.
 You must ALWAYS respond in **valid JSON format only**. No explanations, no comments, no extra text. Only valid JSON.
 
 Your task is to generate a complete adventure game story using the following EXACT JSON structure and naming conventions optimized for Go parsers with PascalCase keys:
-
+make the history inspired by the populair anime 
+func (seedrandomizer())
 {
   "WorldIntro": "A short and engaging introduction to the game world.",
   "Player": {
@@ -69,6 +71,31 @@ Your task is to generate a complete adventure game story using the following EXA
     "Health": Integer value (starting health),
     "Attack": Integer value (starting attack power),
     "Defense": Integer value (starting defense power)
+	"Inventory": [
+    {
+		// ItemType 0 == heal, 1 == attack, 2 == defense
+		// those item are inspired by the anime
+      "ItemType": Integer value (starting defense power),
+      "NameItem": "item are inspired by the anime",
+      "Health": Integer value (starting defense power),
+      "Attack": Integer value (starting defense power),
+      "Defense": Integer value (starting defense power)
+    },
+    {
+      "ItemType": Integer value (starting defense power),
+      "NameItem": "item are inspired by the anime",
+      "Health": Integer value (starting defense power),
+      "Attack": Integer value (starting defense power),
+      "Defense": Integer value (starting defense power)
+    },
+    {
+      "ItemType": Integer value (starting defense power),
+      "NameItem": "item are inspired by the anime",
+      "Health": Integer value (starting defense power),
+      "Attack": Integer value (starting defense power),
+      "Defense": Integer value (starting defense power)
+    }
+  ]
   },
   "Bosses": [
     {
