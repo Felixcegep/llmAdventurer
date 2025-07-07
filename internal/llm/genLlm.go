@@ -4,9 +4,68 @@ import (
 	"context"
 	"fmt"
 	"google.golang.org/genai"
+	"math/rand"
+	"time"
 )
 
+var animeList = []string{
+	"Attack on Titan",
+	"Demon Slayer",
+	"Sword Art Online",
+	"Fullmetal Alchemist: Brotherhood",
+	"My Hero Academia",
+	"One Piece",
+	"Naruto",
+	"Bleach",
+	"Jujutsu Kaisen",
+	"Hunter x Hunter",
+	"Fairy Tail",
+	"Tokyo Ghoul",
+	"Black Clover",
+	"Blue Exorcist",
+	"Fire Force",
+	"Chainsaw Man",
+	"Dragon Ball Z",
+	"Dragon Ball Super",
+	"Yu Yu Hakusho",
+	"Inuyasha",
+	"Akame ga Kill!",
+	"Fate/Stay Night: Unlimited Blade Works",
+	"Fate/Zero",
+	"Vinland Saga",
+	"The Seven Deadly Sins",
+	"Soul Eater",
+	"Seraph of the End",
+	"Claymore",
+	"D.Gray-man",
+	"Trigun",
+	"Berserk",
+	"Noragami",
+	"Mob Psycho 100",
+	"One Punch Man",
+	"Kill la Kill",
+	"Magi: The Labyrinth of Magic",
+	"Rurouni Kenshin",
+	"Gurren Lagann",
+	"Sword of the Stranger",
+	"No Game No Life",
+	"Log Horizon",
+	"Tower of God",
+	"Black Lagoon",
+	"Psycho-Pass",
+	"Re:Zero",
+	"Dr. Stone",
+	"Made in Abyss",
+	"Goblin Slayer",
+	"The Rising of the Shield Hero",
+	"Bungo Stray Dogs",
+}
+
 func Llm_choices() (string, error) {
+	rand.Seed(time.Now().UnixNano()) // Seed the random generator
+	randomIndex := rand.Intn(len(animeList))
+	randomAnime := animeList[randomIndex]
+	fmt.Println("anime : ", randomAnime)
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, nil)
 	if err != nil {
@@ -14,13 +73,13 @@ func Llm_choices() (string, error) {
 	}
 
 	config := &genai.GenerateContentConfig{
-		SystemInstruction: genai.NewContentFromText(`
+		SystemInstruction: genai.NewContentFromText(fmt.Sprintf(`
 You are a JSON Game Story Generator.
 
 You must ALWAYS respond in **valid JSON format only**. No explanations, no comments, no extra text. Only valid JSON.
 
 Your task is to generate a complete adventure game story using the following EXACT JSON structure and naming conventions optimized for Go parsers with PascalCase keys:
-make the history inspired by the populair anime 
+make the history inspired by the populair anime %s
 func (seedrandomizer())
 {
   "WorldIntro": "A short and engaging introduction to the game world.",
@@ -110,7 +169,7 @@ func (seedrandomizer())
 
 This format is fully compatible with Go struct parsing without needing json tags or additional mapping.
 
-`, genai.RoleUser),
+`, randomAnime), genai.RoleUser),
 	}
 
 	result, _ := client.Models.GenerateContent(
