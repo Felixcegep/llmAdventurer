@@ -39,6 +39,17 @@ type Player struct {
 	HealingPotion int
 }
 
+func (p *Player) attack(attack, defense int) {
+
+}
+func (p *Player) itemdefense(defenseadd int) {
+	p.Defense += defenseadd
+}
+func (p *Player) healingpotion(healingpotion int) {
+	const PV = 50
+	p.Health += PV
+}
+
 type Boss struct {
 	Name    string `json:"Name"`
 	Health  int    `json:"Health"`
