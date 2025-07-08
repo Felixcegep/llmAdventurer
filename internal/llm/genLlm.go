@@ -111,6 +111,7 @@ All stats and items must be internally balanced to ensure a fair and engaging EA
     {
 		// ItemType 0 == heal, 1 == attack, 2 == defense
 		// those item are inspired by the anime
+		// those item are really powerfull for Health Attack Or Defense and are comparable to the boss ability 
       "ItemType": Integer value (starting defense power),
       "NameItem": "item are inspired by the anime",
       "Health": Integer value (starting defense power),
@@ -197,7 +198,6 @@ This format is fully compatible with Go struct parsing without needing json tags
 		genai.Text("generate it"),
 		config,
 	)
-	fmt.Println(result.Text())
 
 	formated := result.Text()[7 : len(result.Text())-3]
 	return formated, nil

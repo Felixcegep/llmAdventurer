@@ -29,6 +29,7 @@ var playCmd = &cobra.Command{
 			fmt.Println(err)
 			return
 		}
+		color.Blue(gameData.Intro)
 
 		color.Yellow("Intro: %s", gameData.Dialogues[0].Content)
 		time.Sleep(2 * time.Second)

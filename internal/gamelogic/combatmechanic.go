@@ -38,7 +38,7 @@ func Combat(p *Player, b *Boss, dialogue string) bool {
 			color.Cyan("  [2] 🧪  Se soigner")
 			color.Cyan("  [3] 🎒  Utiliser un objet")
 			color.Cyan("  [4] ✨  Superpouvoir")
-			color.Cyan("👉 Entrez votre choix > ")
+			fmt.Print("👉 Entrez votre choix > ")
 			fmt.Scan(&choice)
 			if 0 < choice && choice <= 4 {
 				playerTurn(p, b, choice)
