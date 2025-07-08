@@ -25,9 +25,11 @@ func Combat(p *Player, b *Boss, dialogue string) bool {
 		if b.Health <= 0 || p.Health <= 0 {
 			if b.Health <= 0 {
 				color.Green("🎉 You defeated %s!", b.Name)
+				clearScreen()
 				return true
 			} else {
-				color.Red("💀 You were defeated by %s...", b.Name)
+				defeatScreen(b)
+
 				return false
 			}
 		} else {
@@ -45,9 +47,12 @@ func Combat(p *Player, b *Boss, dialogue string) bool {
 				if b.Health > 0 {
 					bossTurn(p, b)
 					if p.Health <= 0 {
+						defeatScreen(b)
 						return false
+
 					}
 				} else {
+
 					return true
 				}
 
@@ -58,6 +63,29 @@ func Combat(p *Player, b *Boss, dialogue string) bool {
 			}
 		}
 
+	}
+}
+func defeatScreen(b *Boss) {
+	clearScreen()
+	art := []string{
+		"=========================================",
+		"               💀 DEFEAT 💀              ",
+		"=========================================",
+		fmt.Sprintf("   You were defeated by %s...", b.Name),
+		"",
+		"          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒           ",
+		"         ▒▒░░░░░░░░░░░░░░░░▒▒          ",
+		"         ▒▒░░   RIP Hero   ░░▒▒        ",
+		"         ▒▒░░   ⚔️👺⚔️     ░░▒▒        ",
+		"          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒           ",
+		"",
+		"   Live to fight another day, warrior.",
+		"=========================================",
+	}
+
+	for _, line := range art {
+		color.Red(line)
+		time.Sleep(200 * time.Millisecond)
 	}
 }
 

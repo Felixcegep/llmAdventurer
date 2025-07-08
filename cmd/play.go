@@ -33,7 +33,9 @@ var playCmd = &cobra.Command{
 
 		color.Yellow("Intro: %s", gameData.Dialogues[0].Content)
 		time.Sleep(2 * time.Second)
+		Maxhealth := gameData.Players.Health
 		for i, boss := range gameData.Bosses {
+			gameData.Players.Health = Maxhealth
 			result := gamelogic.Combat(&gameData.Players, &boss, gameData.Dialogues[i+1].Content)
 			if result == false {
 				color.Red("💀 Vous avez perdu la bataille...")
