@@ -61,7 +61,7 @@ var animeList = []string{
 	"Bungo Stray Dogs",
 }
 
-func Llm_choices() (string, error) {
+func LlmChoices() (string, error) {
 	rand.Seed(time.Now().UnixNano()) // Seed the random generator
 	randomIndex := rand.Intn(len(animeList))
 	randomAnime := animeList[randomIndex]
@@ -79,8 +79,16 @@ You are a JSON Game Story Generator.
 You must ALWAYS respond in **valid JSON format only**. No explanations, no comments, no extra text. Only valid JSON.
 
 Your task is to generate a complete adventure game story using the following EXACT JSON structure and naming conventions optimized for Go parsers with PascalCase keys:
-make the history inspired by the populair anime %s
-func (seedrandomizer())
+Make the story inspired by the popular anime %s  
+DIFFICULTY: EASY
+
+⚖️ Game Balance Rule:
+All stats and items must be internally balanced to ensure a fair and engaging EASY-difficulty experience.  
+- Bosses should be beatable with reasonable use of healing, defense, and superPower.  
+- The player's base stats must allow survival for several turns against bosses.  
+- The superPower must be strong but limited or conditional to maintain balance.  
+- Inventory items must meaningfully contribute to survival or offense, but not break challenge completely.
+
 {
   "WorldIntro": "A short and engaging introduction to the game world.",
   "Player": {

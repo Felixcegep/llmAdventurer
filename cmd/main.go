@@ -4,10 +4,11 @@ import (
 	"awesomeProject1/internal/gamelogic"
 	"awesomeProject1/internal/llm"
 	"fmt"
+	"time"
 )
 
 func main() {
-	gameDataUnformated, err := llm.Llm_choices()
+	gameDataUnformated, err := llm.LlmChoices()
 
 	if err != nil {
 		fmt.Println(err)
@@ -17,20 +18,21 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(gameData)
-
 	gameData.Players.HealingPotion = 5
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+
 	fmt.Println("intro", gameData.Dialogues[0].Content)
-	fmt.Println("player", gameData.Players)
-
+	time.Sleep(2 * time.Second)
 	for i, boss := range gameData.Bosses {
-		gamelogic.Combat(&gameData.Players, &boss, gameData.Dialogues[i+1].Content)
-	}
-	//fmt.Println("end", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
-	//fmt.Println("player", gameData.Players.Inventory)
+		result := gamelogic.Combat(&gameData.Players, &boss, gameData.Dialogues[i+1].Content)
+		if result == false {
+			fmt.Println("you lost ")
+			return
 
+		}
+		fmt.Println("end", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
+	}
 }

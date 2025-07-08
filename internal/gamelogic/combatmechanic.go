@@ -2,22 +2,25 @@ package gamelogic
 
 import (
 	"fmt"
+	"time"
 )
 
 func calculateDamage(attack, defense int) int {
 	damage := attack - (defense / 2)
 	return damage
 }
-func Combat(p *Player, b *Boss, dialogue string) {
-	fmt.Println("SUPERPOWER", p.SuperPower)
-	fmt.Println("attack", b.Attack)
+func Combat(p *Player, b *Boss, dialogue string) bool {
 	fmt.Printf("combat %v vs %v \n", p.HeroName, b.Name)
 	fmt.Println("Dialogue : ", dialogue)
+	time.Sleep(2 * time.Second)
 	for {
-		fmt.Printf("%s %d  vs  %s %d \n", p.HeroName, p.Health, b.Name, b.Health)
 
 		if b.Health <= 0 || p.Health <= 0 {
-			break
+			if b.Health <= 0 {
+				return true
+			} else {
+				return false
+			}
 		} else {
 
 			var choice int
@@ -26,7 +29,17 @@ func Combat(p *Player, b *Boss, dialogue string) {
 			fmt.Scan(&choice)
 			if 0 < choice && choice <= 4 {
 				playerTurn(p, b, choice)
-				bossTurn(p, b)
+				if b.Health > 0 {
+					bossTurn(p, b)
+					if p.Health <= 0 {
+						return false
+					}
+					fmt.Printf("%s %d : %s %d", p.HeroName, p.Health, b.Name, b.Health)
+
+				} else {
+					return true
+				}
+
 			} else {
 				fmt.Println("choice dont exist")
 				continue
