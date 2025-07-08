@@ -35,12 +35,13 @@ var playCmd = &cobra.Command{
 		for i, boss := range gameData.Bosses {
 			result := gamelogic.Combat(&gameData.Players, &boss, gameData.Dialogues[i+1].Content)
 			if result == false {
-				color.Red("YOU LOST")
+				color.Red("💀 Vous avez perdu la bataille...")
 				return
 
 			}
-			fmt.Println("end", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
-			color.Green("You won the battle!")
+			color.Green("🎉 Vous avez gagné la bataille !")
+			color.Cyan("Fin du chapitre: %s", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
+			time.Sleep(3 * time.Second)
 		}
 	},
 }

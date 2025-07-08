@@ -2,7 +2,8 @@ package gamelogic
 
 import (
 	"encoding/json"
-	"fmt"
+	"github.com/fatih/color"
+	"time"
 )
 
 type Game struct {
@@ -28,8 +29,9 @@ type Object struct {
 	Defense  int      `json:"Defense"`
 }
 type Player struct {
-	HeroName      string   `json:"HeroName"`
-	Health        int      `json:"Health"`
+	HeroName      string `json:"HeroName"`
+	Health        int    `json:"Health"`
+	MaxHealth     int
 	Attack        int      `json:"Attack"`
 	Defense       int      `json:"Defense"`
 	Inventory     []Object `json:"Inventory"`
@@ -39,20 +41,22 @@ type Player struct {
 
 func (p *Player) healingpotion() {
 	const PV = 50
-	fmt.Println("healing")
 	if p.HealingPotion > 0 {
 		p.Health += PV
+		color.Green("💖 Vous récupérez %d PV grâce à une potion ! Il vous reste %d PV.\n", PV, p.Health)
 		p.HealingPotion--
 	} else {
-		fmt.Println("no healing potion left you pass the tour ")
+		color.Red("❌ Plus de potion de soin ! Vous passez votre tour.\n")
 	}
+	time.Sleep(1 * time.Second)
 }
 
 type Boss struct {
-	Name    string `json:"Name"`
-	Health  int    `json:"Health"`
-	Attack  int    `json:"Attack"`
-	Defense int    `json:"Defense"`
+	Name      string `json:"Name"`
+	Health    int    `json:"Health"`
+	MaxHealth int
+	Attack    int `json:"Attack"`
+	Defense   int `json:"Defense"`
 }
 type Dialogue struct {
 	Timetype string `json:"Type"`
@@ -64,6 +68,10 @@ func GameInitialization(generated string) (Game, error) {
 	err := json.Unmarshal([]byte(generated), &game)
 	if err != nil {
 		return Game{}, err
+	}
+	game.Players.MaxHealth = game.Players.Health
+	for i := range game.Bosses {
+		game.Bosses[i].MaxHealth = game.Bosses[i].Health
 	}
 	return game, nil
 }
