@@ -87,7 +87,18 @@ func (seedrandomizer())
 	"HeroName": "The name of the main character.",
     "Health": Integer value (starting health),
     "Attack": Integer value (starting attack power),
-    "Defense": Integer value (starting defense power)
+    "Defense": Integer value (starting defense power),
+	"superPower" :  {
+		// ItemType 0 == heal, 1 == attack, 2 == defense
+		// those item are inspired by the anime
+		// this is to equilibrate the fight and make it possible to kill the boss
+		// the stat of this object are OVERPOWERED TO EQUILIBRATE
+      "ItemType": Integer value (starting defense power),
+      "NameItem": "item are inspired by the anime",
+      "Health": Integer value (starting defense power),
+      "Attack": Integer value (starting defense power),
+      "Defense": Integer value (starting defense power)
+    }
 	"Inventory": [
     {
 		// ItemType 0 == heal, 1 == attack, 2 == defense

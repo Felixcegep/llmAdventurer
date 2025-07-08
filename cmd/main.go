@@ -8,6 +8,7 @@ import (
 
 func main() {
 	gameDataUnformated, err := llm.Llm_choices()
+
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -34,6 +34,7 @@ type Player struct {
 	Defense       int      `json:"Defense"`
 	Inventory     []Object `json:"Inventory"`
 	HealingPotion int
+	SuperPower    Object `json:"superPower"`
 }
 
 func (p *Player) healingpotion() {
