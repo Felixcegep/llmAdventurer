@@ -63,8 +63,28 @@ func Combat(p *Player, b *Boss, dialogue string) bool {
 
 func renderHealthBar(name string, current, max int) {
 	barLength := 20
-	filled := int(float64(current) / float64(max) * float64(barLength))
+	// Ensure current health is not negative and not greater than max health for rendering purposes
+	displayCurrent := current
+	if displayCurrent < 0 {
+		displayCurrent = 0
+	}
+	if displayCurrent > max {
+		displayCurrent = max
+	}
+
+	filled := int(float64(displayCurrent) / float64(max) * float64(barLength))
+	if filled < 0 { // Should not happen with displayCurrent clamping, but as a safeguard
+		filled = 0
+	}
+	if filled > barLength { // Should not happen with displayCurrent clamping, but as a safeguard
+		filled = barLength
+	}
+
 	empty := barLength - filled
+	if empty < 0 { // Should not happen if filled is correctly clamped
+		empty = 0
+	}
+
 	bar := strings.Repeat("█", filled) + strings.Repeat("░", empty)
 	color.White("%s [%s] %d/%d PV", name, bar, current, max)
 }
