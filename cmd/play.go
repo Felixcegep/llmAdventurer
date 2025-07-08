@@ -32,7 +32,7 @@ var playCmd = &cobra.Command{
 		color.Blue(gameData.Intro)
 
 		color.Yellow("Intro: %s", gameData.Dialogues[0].Content)
-		time.Sleep(2 * time.Second)
+		time.Sleep(10 * time.Second)
 		Maxhealth := gameData.Players.Health
 		for i, boss := range gameData.Bosses {
 			gameData.Players.Health = Maxhealth
@@ -42,10 +42,13 @@ var playCmd = &cobra.Command{
 				return
 
 			}
-			color.Green("🎉 Vous avez gagné la bataille !")
-			color.Cyan("Fin du chapitre: %s", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
-			time.Sleep(3 * time.Second)
+			if i < len(gameData.Bosses)-1 {
+				color.Green("🎉 Vous avez gagné la bataille !")
+				color.Cyan("Fin du chapitre: %s", gameData.Dialogues[len(gameData.Dialogues)-1].Content)
+				time.Sleep(3 * time.Second)
+			}
 		}
+		gamelogic.EndScreen(gameData)
 	},
 }
 

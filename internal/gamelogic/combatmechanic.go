@@ -14,7 +14,7 @@ func calculateDamage(attack, defense int) int {
 func Combat(p *Player, b *Boss, dialogue string) bool {
 	clearScreen()
 	color.Cyan("📝 Dialogue: %s", dialogue)
-	time.Sleep(2 * time.Second)
+	time.Sleep(5 * time.Second)
 	for {
 		clearScreen()
 		color.Yellow("========== COMBAT ==========")
@@ -65,6 +65,50 @@ func Combat(p *Player, b *Boss, dialogue string) bool {
 
 	}
 }
+func EndScreen(game Game) {
+	clearScreen()
+
+	player := game.Players
+	victoryMessage := game.Dialogues[len(game.Dialogues)-1].Content
+
+	art := []string{
+		"",
+		"🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌",
+		"🌟                                           🌟",
+		"🌟         🏆 MISSION ACCOMPLISHED 🏆         🌟",
+		"🌟___________________________________________🌟",
+		"",
+		fmt.Sprintf("  Hero: %s", player.HeroName),
+		"  Final Stats:",
+		fmt.Sprintf("    ✦ Attack: %d", player.Attack),
+		fmt.Sprintf("    ✦ Defense: %d", player.Defense),
+		fmt.Sprintf("    ✦ Super Power: %s", player.SuperPower.NameItem),
+		"",
+		"  Bosses Defeated:",
+	}
+	for _, boss := range game.Bosses {
+		art = append(art, fmt.Sprintf("    ☠️  %s", boss.Name))
+	}
+	art = append(art, "")
+	art = append(art, "  Locations Liberated:")
+	for _, level := range game.Levels {
+		art = append(art, fmt.Sprintf("    🗺️  %s", level))
+	}
+	art = append(art, "")
+	art = append(art, "🎖️ Final Mission Report:")
+	art = append(art, fmt.Sprintf("   \"%s\"", victoryMessage))
+	art = append(art, "")
+	art = append(art, "🌟 Your legend as an exorcist will echo through the Order.")
+	art = append(art, "   Press ENTER to return to reality.")
+	art = append(art, "🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌🌌")
+
+	for _, line := range art {
+		color.Magenta(line)
+		time.Sleep(100 * time.Millisecond)
+	}
+	fmt.Scanln()
+}
+
 func defeatScreen(b *Boss) {
 	clearScreen()
 	art := []string{
