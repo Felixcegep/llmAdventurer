@@ -21,110 +21,46 @@ Tu dois :
 ## 🧑‍💻 Section 2 : Step-by-Step — Améliorer l’UI en CLI
 
 ### ⚠️ AVANT DE COMMENCER
-> 🚫 **NE PAS LANCER LE PROGRAMME sans définir la clé API** :
-```bash
-# Bash / Zsh / Git Bash
-export GEMINI_API_KEY="ta_clé"
+> 🚫 **NE PAS LANCER LE PROGRAMME 
 
-# PowerShell
-$env:GEMINI_API_KEY="ta_clé"
 ```
 
 ---
 
-### 1️⃣ Ajouter des couleurs dans le terminal
+il y a un bug avec le healthbar
+loom Soul [████████████████████] 250/250 PV
+============================
+Actions disponibles :
+[1] ⚔️  Attaquer
+[2] 🧪  Se soigner
+[3] 🎒  Utiliser un objet
+[4] ✨  Superpouvoir
+👉 Entrez votre choix > 4
+💥 Super Pouvoir Activé!
+💖 Vous récupérez 50 PV et infligez -7 dégâts !
+👹 Gloom Soul vous attaque!
+💔 Vous avez pris 10 dégâts! Il vous reste 190 PV.
+========== COMBAT ==========
+panic: strings: negative Repeat count
 
-```bash
-go get github.com/fatih/color
-```
-
-```go
-import "github.com/fatih/color"
-
-color.Green("✅ Attaque réussie !")
-color.Red("❌ Vous avez subi des dégâts.")
-color.Cyan("🎒 Inventaire ouvert.")
-```
-
----
-
-### 2️⃣ Afficher des menus clairs
-
-```go
-fmt.Println("========== COMBAT ==========")
-fmt.Printf("👤 %s (PV: %d)  🆚  🐲 %s (PV: %d)\n", p.HeroName, p.Health, b.Name, b.Health)
-fmt.Println("Actions disponibles :")
-fmt.Println("  [1] ⚔️  Attaquer")
-fmt.Println("  [2] 🧪  Se soigner")
-fmt.Println("  [3] 🎒  Utiliser un objet")
-fmt.Print("👉 Entrez votre choix > ")
-```
-
----
-
-### 3️⃣ Ajouter du rythme avec `time.Sleep`
-
-```go
-fmt.Println("L'ennemi vous fixe...")
-time.Sleep(2 * time.Second)
-```
-
----
-
-### 4️⃣ Afficher les effets des actions
-
-```go
-fmt.Printf("🎯 Vous infligez %d dégâts à %s !\n", damage, b.Name)
-fmt.Printf("💖 Vous récupérez %d PV.\n", healAmount)
-```
-
----
-
-### 5️⃣ Nettoyer l’écran entre les tours (facultatif)
-
-```go
-fmt.Print("\033[H\033[2J") // Efface l'écran dans la plupart des terminaux
-```
-
----
-
-### 6️⃣ Utiliser des emojis pour dynamiser
-
-- ⚔️ Attaque
-- 🧪 Potion
-- 🛡️ Défense
-- 🎒 Inventaire
-- 💥 Dégâts
-- 💖 Soins
-
----
-
-### 7️⃣ Créer des barres de vie
-
-```go
-func renderHealthBar(name string, current, max int) {
-    bar := strings.Repeat("█", current*10/max)
-    fmt.Printf("%s [%s] %d/%d PV\n", name, bar, current, max)
-}
-```
-
----
-
-### 8️⃣ Centraliser les menus
-
-```go
-func showMainMenu() {
-    fmt.Println("🎮 MENU PRINCIPAL")
-    fmt.Println("[1] Nouvelle Partie")
-    fmt.Println("[2] Charger Partie")
-    fmt.Println("[3] Quitter")
-}
-```
-
----
-
-### ✅ Résultat attendu
-
-- Interface conviviale, claire et engageante
-- Plus immersive même sans interface graphique
-- Rythme plus fluide et lisible
+goroutine 1 [running]:
+strings.Repeat({0x1095d01?, 0x3?}, 0x1d?)
+C:/Program Files/Go/src/strings/strings.go:624 +0x585
+awesomeProject1/internal/gamelogic.renderHealthBar({0xc000321b6c, 0x4}, 0xbe, 0x96)
+C:/Users/fella/GolandProjects/awesomeProject1/internal/gamelogic/combatmechanic.go:68 +0x9c
+awesomeProject1/internal/gamelogic.Combat(0xc000099a78, 0xc000099b48, {0xc00037c000, 0x5c})
+C:/Users/fella/GolandProjects/awesomeProject1/internal/gamelogic/combatmechanic.go:21 +0x158
+awesomeProject1/cmd.init.func1(0xc000196c00?, {0x10960bf?, 0x4?, 0x10960c3?})
+C:/Users/fella/GolandProjects/awesomeProject1/cmd/play.go:37 +0x3d9
+github.com/spf13/cobra.(*Command).execute(0x1656d20, {0x16aa100, 0x0, 0x0})
+C:/Users/fella/go/pkg/mod/github.com/spf13/cobra@v1.9.1/command.go:1019 +0xa91
+github.com/spf13/cobra.(*Command).ExecuteC(0x1656fe0)
+C:/Users/fella/go/pkg/mod/github.com/spf13/cobra@v1.9.1/command.go:1148 +0x46f
+github.com/spf13/cobra.(*Command).Execute(...)
+C:/Users/fella/go/pkg/mod/github.com/spf13/cobra@v1.9.1/command.go:1071
+awesomeProject1/cmd.Execute()
+C:/Users/fella/GolandProjects/awesomeProject1/cmd/root.go:30 +0x1a
+main.main()
+C:/Users/fella/GolandProjects/awesomeProject1/main.go:9 +0xf
+exit status 2
+et je veux que la health barre affiche zero si le hero perd 
